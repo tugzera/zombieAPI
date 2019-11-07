@@ -4,14 +4,16 @@
 const Model = use('Model')
 
 class Zombie extends Model {
-  armors () {
-    return this.hasMany('App/Models/Armor')
-  }
-  weapons () {
-    return this.hasMany('App/Models/Weapon')
-  }
   type() {
     return this.belongsTo('App/Models/Type')
+  }
+
+  weapon() {
+    return this.belongsToMany('App/Models/Weapon').pivotTable('zombie_weapons')
+  }
+
+  armor() {
+    return this.belongsToMany('App/Models/Armor').pivotTable('zombie_armors')
   }
 }
 
