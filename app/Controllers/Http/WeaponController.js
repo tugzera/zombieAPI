@@ -4,9 +4,7 @@ const Weapon = use('App/Models/Weapon');
 
 class WeaponController {
   async index({ request, response, view }) {
-    const weapons = await Weapon.query()
-      .with("type")
-      .fetch();
+    const weapons = await Weapon.all()
     return weapons;
   }
 
