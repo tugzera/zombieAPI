@@ -17,3 +17,4 @@
 const Route = use('Route')
 
 Route.resource('zombies', 'ZombieController').apiOnly()
+Route.resource('weapons', 'WeaponController').apiOnly()

@@ -4,9 +4,7 @@
 const Model = use('Model')
 
 class Armor extends Model {
-  zombies () {
-    return this.hasMany('App/Models/Zombie')
-  }
+
 }
 
 module.exports = Armor
