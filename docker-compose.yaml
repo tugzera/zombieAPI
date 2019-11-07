@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  zombies:
+    external: true
+
+  internal:
+    external: false
+
+services:
+  postgres:
+    image: postgres:9.5-alpine
+    container_name: postgres
+    volumes:
+      - "./docker/postgres:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    networks:
+      - zombies
+      - internal
