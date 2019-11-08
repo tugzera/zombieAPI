@@ -9,6 +9,11 @@ class ZombieWeaponController {
     .fetch();
     return zombie
   }
+  async store({request, params, view}) {
+    const data = request.all();
+    const zombie = await Zombie.findOrFail(data.zombie_id);
+    return  zombie.weapon().attach([data.weapon_id])
+  }
 }
 
 module.exports = ZombieWeaponController;
