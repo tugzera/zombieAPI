@@ -16,7 +16,6 @@ class WeaponController {
 
   async show({ params }) {
     const weapon = await Weapon.findOrFail(params.id)
-    const x = weapon.created_at
     return weapon
   }
 
