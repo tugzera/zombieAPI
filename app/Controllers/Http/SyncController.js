@@ -4,13 +4,16 @@ const Zombie = use("App/Models/Zombie");
 const Weapon = use("App/Models/Weapon");
 const Armor = use("App/Models/Armor");
 
+const moment = require("moment");
+
 class SyncController {
   async sync_controller({ request, params }) {
-    const time = params.date;
-    const date = new Date(Number(time)).toLocaleString("pt-BR", {
-      timeZone: "America/Sao_Paulo"
-    });
-
+    var format = "YYYY-MM-DD HH:mm:ss+00";
+    const date = new Date(
+      moment(Number(params.date))
+        .locale("pt-br")
+        .format(format)
+    );
     const syncList = {
       weapon: {
         created: await Weapon.query()
@@ -38,7 +41,6 @@ class SyncController {
           .fetch()
       }
     };
-
     return syncList;
   }
 }
