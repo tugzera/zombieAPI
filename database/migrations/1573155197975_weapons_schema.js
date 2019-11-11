@@ -1,25 +1,30 @@
+"use strict";
 
-'use strict'
+const dateNow = require("../../utils/index");
 
 /** @type {import('@adonisjs/lucid/src/Schema')} */
-const Schema = use('Schema')
+const Schema = use("Schema");
 
 class WeaponsSchema extends Schema {
-  up () {
-    this.create('weapons', (table) => {
-      table.string('name')
-      table.string('bullets')
-      table.integer('attack_points').nullable()
-      table.integer('durability')
-      table.integer('price')
-      table.increments()
-      table.timestamps()
-    })
+  up() {
+    this.create("weapons", table => {
+      table.string("name");
+      table.string("bullets");
+      table.integer("attack_points").nullable();
+      table.integer("durability");
+      table.integer("price");
+      table.increments();
+      table.timestamp("created_at").defaultTo(dateNow.dateNow());
+      table
+        .timestamp("updated_at")
+        .defaultTo(null)
+        .nullable();
+    });
   }
 
-  down () {
-    this.drop('weapons')
+  down() {
+    this.drop("weapons");
   }
 }
 
-module.exports = WeaponsSchema
+module.exports = WeaponsSchema;

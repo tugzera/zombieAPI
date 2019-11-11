@@ -1,10 +1,12 @@
-'use strict'
+"use strict";
 
-const Armor = use('App/Models/Armor')
+const dateNow = require("../../../utils");
+
+const Armor = use("App/Models/Armor");
 
 class ArmorController {
   async index({ request, response, view }) {
-    const armors = await Armor.all()
+    const armors = await Armor.all();
     return armors;
   }
 
@@ -15,23 +17,23 @@ class ArmorController {
   }
 
   async show({ params }) {
-    const armor = await Armor.findOrFail(params.id)
-    return armor
+    const armor = await Armor.findOrFail(params.id);
+    return armor;
   }
 
-  async update({request, response, view, params}) {
-    const armor = await Armor.findOrFail(params.id)
-    const data = request.all()
-    armor.merge(data)
-    armor.save()
-    return armor
+  async update({ request, response, view, params }) {
+    const armor = await Armor.findOrFail(params.id);
+    const data = request.all();
+    armor.merge(data);
+    armor.update_at = dateNow.dateNow();
+    armor.save();
+    return armor;
   }
 
-  async destroy({request, response, params})
-  {
-    const armor = await Armor.findOrFail(params.id)
-    await armor.delete()
+  async destroy({ request, response, params }) {
+    const armor = await Armor.findOrFail(params.id);
+    await armor.delete();
   }
 }
 
-module.exports = ArmorController
+module.exports = ArmorController;

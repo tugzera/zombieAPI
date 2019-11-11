@@ -1,5 +1,7 @@
 "use strict";
 
+const dateNow = require("../../../utils");
+
 const Zombie = use("App/Models/Zombie");
 
 class ZombieController {
@@ -17,23 +19,23 @@ class ZombieController {
   }
 
   async show({ params }) {
-    const zombie = await Zombie.findOrFail(params.id)
-    await zombie.load('type')
-    return zombie
+    const zombie = await Zombie.findOrFail(params.id);
+    await zombie.load("type");
+    return zombie;
   }
 
-  async update({request, response, view, params}) {
-    const zombie = await Zombie.findOrFail(params.id)
-    const data = request.all()
-    zombie.merge(data)
-    zombie.save()
-    return zombie
+  async update({ request, response, view, params }) {
+    const zombie = await Zombie.findOrFail(params.id);
+    const data = request.all();
+    zombie.merge(data);
+    zombie.updated_at = dateNow.dateNow();
+    zombie.save();
+    return zombie;
   }
 
-  async destroy({request, response, params})
-  {
-    const zombie = await Zombie.findOrFail(params.id)
-    await zombie.delete()
+  async destroy({ request, response, params }) {
+    const zombie = await Zombie.findOrFail(params.id);
+    await zombie.delete();
   }
 }
 
