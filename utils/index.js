@@ -1,11 +1,6 @@
-const moment = require("moment");
 
 const dateNow = () => {
-  const format = "YYYY-MM-DD HH:mm:ss";
-  const date = moment(Date.now())
-    .locale("pt-br")
-    .format(format);
-
+  const date = new Date(Date.now()).toLocaleString('pt-BR', {timeZone: 'America/Sao_Paulo'})
   return date;
 };
 

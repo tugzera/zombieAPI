@@ -14,11 +14,12 @@ class WeaponsSchema extends Schema {
       table.integer("durability");
       table.integer("price");
       table.increments();
-      table.timestamp("created_at").defaultTo(dateNow.dateNow());
+      table.timestamp("created_at").defaultTo(dateNow.dateNow())
       table
         .timestamp("updated_at")
         .defaultTo(null)
         .nullable();
+      table.timestamp('teste_date', ).defaultTo(dateNow.dateNow())
     });
   }
 

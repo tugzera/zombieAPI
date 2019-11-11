@@ -10,10 +10,10 @@ class SyncController {
   async sync_controller({ request, params }) {
     var format = "YYYY-MM-DD HH:mm:ss+00";
     const date = new Date(
-      moment(Number(params.date))
+      moment(Date.now())
         .locale("pt-br")
         .format(format)
-    );
+    )
     const syncList = {
       weapon: {
         created: await Weapon.query()
@@ -39,7 +39,7 @@ class SyncController {
         updated: await Armor.query()
           .where("updated_at", ">", date)
           .fetch()
-      }
+      },
     };
     return syncList;
   }
