@@ -33,6 +33,7 @@ class SyncController {
           .fetch(),
         updated: await Zombie.query()
           .where("server_created_at", "<", date)
+          .where("server_updated_at", ">=", date)
           .fetch()
       },
       armors: {
@@ -41,6 +42,7 @@ class SyncController {
           .fetch(),
         updated: await Armor.query()
           .where("server_created_at", "<", date)
+          .where("server_updated_at", ">=", date)
           .fetch()
       }
     };
@@ -58,21 +60,77 @@ class SyncController {
             .locale("pt-br")
             .format(format)
         );
-        await Weapon.create(weapons.created[i])
+        await Weapon.create(weapons.created[i]);
       }
     }
     weapons.updated = collect(weapons.updated).toArray();
     if (weapons.updated.length > 0) {
       for (let i = 0; i < weapons.updated.length; i++) {
         const item = await Weapon.findOrFail(weapons.updated[i].id);
-        if(item) {
-          weapons.updated[i].server_updated_at =  new Date(
-              moment(Date.now())
-                .locale("pt-br")
-                .format(format)
-            );
+        if (item) {
+          weapons.updated[i].server_updated_at = new Date(
+            moment(Date.now())
+              .locale("pt-br")
+              .format(format)
+          );
           item.merge(weapons.updated[i]);
-          item.save()
+          item.save();
+        }
+      }
+    }
+
+    const zombies = sync.zombies;
+    zombies.created = collect(zombies.created).toArray();
+    if (zombies.created.length > 0) {
+      for (let i = 0; i < zombies.created.length; i++) {
+        zombies.created[i].server_created_at = new Date(
+          moment(Date.now())
+            .locale("pt-br")
+            .format(format)
+        );
+        await Zombie.create(zombies.created[i]);
+      }
+    }
+    zombies.updated = collect(zombies.updated).toArray();
+    if (zombies.updated.length > 0) {
+      for (let i = 0; i < zombies.updated.length; i++) {
+        const item = await Zombie.findOrFail(zombies.updated[i].id);
+        if (item) {
+          zombies.updated[i].server_updated_at = new Date(
+            moment(Date.now())
+              .locale("pt-br")
+              .format(format)
+          );
+          item.merge(zombies.updated[i]);
+          item.save();
+        }
+      }
+    }
+
+    const armors = sync.armors;
+    armors.created = collect(armors.created).toArray();
+    if (armors.created.length > 0) {
+      for (let i = 0; i < armors.created.length; i++) {
+        armors.created[i].server_created_at = new Date(
+          moment(Date.now())
+            .locale("pt-br")
+            .format(format)
+        );
+        await Armor.create(armors.created[i]);
+      }
+    }
+    armors.updated = collect(armors.updated).toArray();
+    if (armors.updated.length > 0) {
+      for (let i = 0; i < armors.updated.length; i++) {
+        const item = await Armor.findOrFail(armors.updated[i].id);
+        if (item) {
+          armors.updated[i].server_updated_at = new Date(
+            moment(Date.now())
+              .locale("pt-br")
+              .format(format)
+          );
+          item.merge(armors.updated[i]);
+          item.save();
         }
       }
     }
