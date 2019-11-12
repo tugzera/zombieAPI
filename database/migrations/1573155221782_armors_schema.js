@@ -13,11 +13,10 @@ class ArmorsSchema extends Schema {
       table.integer("durability");
       table.integer("price");
       table.increments();
-      table.timestamp("created_at").defaultTo(dateNow.dateNow());
-      table
-        .timestamp("updated_at")
-        .defaultTo(null)
-        .nullable();
+      table.timestamp("created_at");
+      table.timestamp("updated_at");
+      table.timestamp("server_created_at");
+      table.timestamp('server_updated_at');
     });
   }
 

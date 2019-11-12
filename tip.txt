@@ -1,0 +1,1 @@
+-> Altere o timestamp direto .bashrc export TZ='/usr/share/zoneinfo/America/Sao_Paulo'

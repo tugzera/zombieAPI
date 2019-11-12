@@ -8,6 +8,7 @@ const Schema = use("Schema");
 class ZombiesSchema extends Schema {
   up() {
     this.create("zombies", table => {
+      table.increments();
       table.string("name", 80);
       table.integer("hit_points").nullable();
       table.integer("brains_eaten").nullable();
@@ -15,16 +16,15 @@ class ZombiesSchema extends Schema {
       table.string("turn_date");
       table
         .integer("type_id")
+        .unsigned()
         .references("id")
         .inTable("types")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table.increments();
-      table.timestamp("created_at").defaultTo(dateNow.dateNow());
-      table
-        .timestamp("updated_at")
-        .defaultTo(null)
-        .nullable();
+        table.timestamp("created_at");
+        table.timestamp("updated_at");
+        table.timestamp("server_created_at");
+        table.timestamp('server_updated_at');
     });
   }
 

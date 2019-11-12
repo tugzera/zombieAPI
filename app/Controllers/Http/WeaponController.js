@@ -12,20 +12,21 @@ class WeaponController {
 
   async store({ request, response, view }) {
     const data = request.all();
+    data.server_created_at = dateNow.dateNow();
     const weapon = await Weapon.create(data);
     return weapon;
   }
 
   async show({ params }) {
     const weapon = await Weapon.findOrFail(params.id);
-    return weapon;
+    return weapon.server_created_at;
   }
 
   async update({ request, response, view, params }) {
     const weapon = await Weapon.findOrFail(params.id);
     const data = request.all();
+    data.server_updated_at = dateNow.dateNow();
     weapon.merge(data);
-    weapon.updated_at = dateNow.dateNow();
     weapon.save();
     return weapon;
   }

@@ -15,13 +15,6 @@ class Zombie extends Model {
   armor() {
     return this.belongsToMany("App/Models/Armor").pivotTable("zombie_armors");
   }
-
-  static get updatedAtColumn() {
-    return null;
-  }
-  static get createdAtColumn() {
-    return null;
-  }
 }
 
 module.exports = Zombie;

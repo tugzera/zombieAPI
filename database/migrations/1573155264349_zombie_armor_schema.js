@@ -8,26 +8,25 @@ const Schema = use("Schema");
 class ZombieArmorSchema extends Schema {
   up() {
     this.create("zombie_armors", table => {
+      table.increments();
       table
         .integer("zombie_id")
+        .unsigned()
         .references("id")
         .inTable("zombies")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table;
       table
         .integer("armor_id")
+        .unsigned()
         .references("id")
         .inTable("armors")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-      table;
-      table.increments();
-      table.timestamp("created_at").defaultTo(dateNow.dateNow());
-      table
-        .timestamp("updated_at")
-        .defaultTo(null)
-        .nullable();
+        table.timestamp("created_at");
+        table.timestamp("updated_at");
+        table.timestamp("server_created_at");
+        table.timestamp('server_updated_at');
     });
   }
 

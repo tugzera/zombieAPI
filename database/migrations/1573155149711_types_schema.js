@@ -8,14 +8,13 @@ const Schema = use("Schema");
 class TypesSchema extends Schema {
   up() {
     this.create("types", table => {
+      table.increments();
       table.string("name");
       table.string("abilities");
-      table.increments();
-      table.timestamp("created_at").defaultTo(dateNow.dateNow());
-      table
-        .timestamp("updated_at")
-        .defaultTo(null)
-        .nullable();
+      table.timestamp("created_at");
+      table.timestamp("updated_at");
+      table.timestamp("server_created_at");
+      table.timestamp('server_updated_at');
     });
   }
 

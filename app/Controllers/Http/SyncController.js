@@ -10,36 +10,38 @@ class SyncController {
   async sync_controller({ request, params }) {
     var format = "YYYY-MM-DD HH:mm:ss+00";
     const date = new Date(
-      moment(Date.now())
+      moment(Number(params.date))
         .locale("pt-br")
         .format(format)
-    )
+    );
+    console.log(Date.now())
     const syncList = {
       weapon: {
         created: await Weapon.query()
-          .where("created_at", ">", date)
+          .where("server_created_at", ">", date)
           .fetch(),
 
         updated: await Weapon.query()
-          .where("updated_at", ">", date)
+          .where("server_created_at", "<", date)
+          .where('server_updated_at', '>=', date)
           .fetch()
       },
       zombie: {
         created: await Zombie.query()
-          .where("created_at", ">", date)
+          .where("server_created_at", ">", date)
           .fetch(),
         updated: await Zombie.query()
-          .where("updated_at", ">", date)
+          .where("server_created_at", "<", date)
           .fetch()
       },
       armor: {
         created: await Armor.query()
-          .where("created_at", ">", date)
+          .where("server_created_at", ">", date)
           .fetch(),
         updated: await Armor.query()
-          .where("updated_at", ">", date)
+          .where("server_created_at", "<", date)
           .fetch()
-      },
+      }
     };
     return syncList;
   }
