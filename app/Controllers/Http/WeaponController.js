@@ -19,7 +19,7 @@ class WeaponController {
 
   async show({ params }) {
     const weapon = await Weapon.findOrFail(params.id);
-    return weapon.server_created_at;
+    return weapon;
   }
 
   async update({ request, response, view, params }) {
