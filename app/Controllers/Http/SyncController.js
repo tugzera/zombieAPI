@@ -7,26 +7,25 @@ const Armor = use("App/Models/Armor");
 const moment = require("moment");
 
 class SyncController {
-  async sync_controller({ request, params }) {
+  async sync_get({ request, params }) {
     var format = "YYYY-MM-DD HH:mm:ss+00";
     const date = new Date(
       moment(Number(params.date))
         .locale("pt-br")
         .format(format)
     );
-    console.log(Date.now())
     const syncList = {
-      weapon: {
+      weapons: {
         created: await Weapon.query()
           .where("server_created_at", ">", date)
           .fetch(),
 
         updated: await Weapon.query()
           .where("server_created_at", "<", date)
-          .where('server_updated_at', '>=', date)
+          .where("server_updated_at", ">=", date)
           .fetch()
       },
-      zombie: {
+      zombies: {
         created: await Zombie.query()
           .where("server_created_at", ">", date)
           .fetch(),
@@ -34,7 +33,7 @@ class SyncController {
           .where("server_created_at", "<", date)
           .fetch()
       },
-      armor: {
+      armors: {
         created: await Armor.query()
           .where("server_created_at", ">", date)
           .fetch(),
@@ -44,6 +43,10 @@ class SyncController {
       }
     };
     return syncList;
+  }
+
+  async sync_post({ request, params, response }) {
+    return request.all();
   }
 }
 
