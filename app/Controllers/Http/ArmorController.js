@@ -35,7 +35,7 @@ class ArmorController {
   async destroy({ request, response, params }) {
     const armor = await Armor.findOrFail(params.id);
     const trash = {
-      id_deleted: weapon.id,
+      id_deleted: armor.id,
       column: "armors",
       deleted_at: dateNow.dateNow()
     };

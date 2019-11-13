@@ -38,7 +38,7 @@ class ZombieController {
   async destroy({ request, response, params }) {
     const zombie = await Zombie.findOrFail(params.id);
     const trash = {
-      id_deleted: weapon.id,
+      id_deleted: zombie.id,
       column: "armors",
       deleted_at: dateNow.dateNow()
     };

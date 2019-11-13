@@ -35,7 +35,7 @@ class TypeController {
   async destroy({ request, response, params }) {
     const type = await Type.findOrFail(params.id);
     const trash = {
-      id_deleted: weapon.id,
+      id_deleted: type.id,
       column: "types",
       deleted_at: dateNow.dateNow()
     };
