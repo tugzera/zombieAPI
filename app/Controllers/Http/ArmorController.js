@@ -1,6 +1,7 @@
 "use strict";
 
 const dateNow = require("../../../utils");
+const Trash = use('App/Models/Trash');
 
 const Armor = use("App/Models/Armor");
 
@@ -12,6 +13,7 @@ class ArmorController {
 
   async store({ request, response, view }) {
     const data = request.all();
+    data.server_created_at = dateNow.dateNow();
     const armor = await Armor.create(data);
     return armor;
   }
@@ -24,14 +26,20 @@ class ArmorController {
   async update({ request, response, view, params }) {
     const armor = await Armor.findOrFail(params.id);
     const data = request.all();
+    data.server_updated_at = dateNow.dateNow();
     armor.merge(data);
-    armor.update_at = dateNow.dateNow();
     armor.save();
     return armor;
   }
 
   async destroy({ request, response, params }) {
     const armor = await Armor.findOrFail(params.id);
+    const trash = {
+      id_deleted: weapon.id,
+      column: "armors",
+      deleted_at: dateNow.dateNow()
+    };
+    await Trash.create(trash);
     await armor.delete();
   }
 }

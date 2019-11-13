@@ -3,6 +3,7 @@
 const dateNow = require("../../../utils");
 
 const Weapon = use("App/Models/Weapon");
+const Trash = use("App/Models/Trash");
 
 class WeaponController {
   async index({ request, response, view }) {
@@ -33,6 +34,12 @@ class WeaponController {
 
   async destroy({ request, response, params }) {
     const weapon = await Weapon.findOrFail(params.id);
+    const trash = {
+      id_deleted: weapon.id,
+      column: "weapons",
+      deleted_at: dateNow.dateNow()
+    };
+    await Trash.create(trash);
     await weapon.delete();
   }
 }

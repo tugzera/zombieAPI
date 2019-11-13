@@ -8,6 +8,7 @@ const moment = require("moment");
 const collect = require("collect.js");
 
 const format = "YYYY-MM-DD HH:mm:ss+00";
+const dateNow = require("../../../utils");
 
 class SyncController {
   async sync_get({ request, params }) {
@@ -55,11 +56,7 @@ class SyncController {
     weapons.created = collect(weapons.created).toArray();
     if (weapons.created.length > 0) {
       for (let i = 0; i < weapons.created.length; i++) {
-        weapons.created[i].server_created_at = new Date(
-          moment(Date.now())
-            .locale("pt-br")
-            .format(format)
-        );
+        weapons.created[i].server_created_at = dateNow.dateNow();
         await Weapon.create(weapons.created[i]);
       }
     }
@@ -68,11 +65,7 @@ class SyncController {
       for (let i = 0; i < weapons.updated.length; i++) {
         const item = await Weapon.findOrFail(weapons.updated[i].id);
         if (item) {
-          weapons.updated[i].server_updated_at = new Date(
-            moment(Date.now())
-              .locale("pt-br")
-              .format(format)
-          );
+          weapons.updated[i].server_updated_at = dateNow.dateNow();
           item.merge(weapons.updated[i]);
           item.save();
         }
@@ -83,11 +76,7 @@ class SyncController {
     zombies.created = collect(zombies.created).toArray();
     if (zombies.created.length > 0) {
       for (let i = 0; i < zombies.created.length; i++) {
-        zombies.created[i].server_created_at = new Date(
-          moment(Date.now())
-            .locale("pt-br")
-            .format(format)
-        );
+        zombies.created[i].server_created_at = dateNow.dateNow();
         await Zombie.create(zombies.created[i]);
       }
     }
@@ -96,11 +85,7 @@ class SyncController {
       for (let i = 0; i < zombies.updated.length; i++) {
         const item = await Zombie.findOrFail(zombies.updated[i].id);
         if (item) {
-          zombies.updated[i].server_updated_at = new Date(
-            moment(Date.now())
-              .locale("pt-br")
-              .format(format)
-          );
+          zombies.updated[i].server_updated_at = dateNow.dateNow();
           item.merge(zombies.updated[i]);
           item.save();
         }
@@ -111,11 +96,7 @@ class SyncController {
     armors.created = collect(armors.created).toArray();
     if (armors.created.length > 0) {
       for (let i = 0; i < armors.created.length; i++) {
-        armors.created[i].server_created_at = new Date(
-          moment(Date.now())
-            .locale("pt-br")
-            .format(format)
-        );
+        armors.created[i].server_created_at = dateNow.dateNow();
         await Armor.create(armors.created[i]);
       }
     }
@@ -124,11 +105,7 @@ class SyncController {
       for (let i = 0; i < armors.updated.length; i++) {
         const item = await Armor.findOrFail(armors.updated[i].id);
         if (item) {
-          armors.updated[i].server_updated_at = new Date(
-            moment(Date.now())
-              .locale("pt-br")
-              .format(format)
-          );
+          armors.updated[i].server_updated_at = dateNow.dateNow();
           item.merge(armors.updated[i]);
           item.save();
         }

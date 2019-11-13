@@ -1,8 +1,9 @@
 "use strict";
 
-const dateNow = require("../../../utils");
-
 const Type = use("App/Models/Type");
+const Trash = use("App/Models/Trash");
+
+const dateNow = require("../../../utils");
 
 class TypeController {
   async index({ request, response, view }) {
@@ -12,6 +13,7 @@ class TypeController {
 
   async store({ request, response, view }) {
     const data = request.all();
+    data.server_created_at = dateNow.dateNow();
     const type = await Type.create(data);
     return type;
   }
@@ -24,14 +26,20 @@ class TypeController {
   async update({ request, response, view, params }) {
     const type = await Type.findOrFail(params.id);
     const data = request.all();
+    data.server_updated_at = dateNow.dateNow();
     type.merge(data);
-    type.updated_at = dateNow.dateNow();
     type.save();
     return type;
   }
 
   async destroy({ request, response, params }) {
     const type = await Type.findOrFail(params.id);
+    const trash = {
+      id_deleted: weapon.id,
+      column: "types",
+      deleted_at: dateNow.dateNow()
+    };
+    await Trash.create(trash);
     await type.delete();
   }
 }
